@@ -11,10 +11,11 @@ const styles = StyleSheet.create({
     backgroundColor: theme.colors.backgroundColor,
     paddingTop: Constants.statusBarHeight,
     paddingBottom: 10,
-    paddingLeft: 15,
+    paddingLeft: 8,
   },
-  item: {
-    paddingRight: 24,
+  link: {
+    paddingHorizontal: 6,
+    marginRight: 24,
   },
 })
 
@@ -22,10 +23,10 @@ const AppBar = () => {
   return (
     <View style={styles.container}>
       <ScrollView horizontal>
-        <Link to="/" style={styles.item}>
+        <Link to="/" style={styles.link}>
           <AppBarTab>Repositories</AppBarTab>
         </Link>
-        <Link to="/signin" style={styles.item}>
+        <Link to="/signin" style={styles.link}>
           <AppBarTab>Sign In</AppBarTab>
         </Link>
       </ScrollView>
