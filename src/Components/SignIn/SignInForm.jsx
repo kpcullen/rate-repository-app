@@ -3,6 +3,8 @@ import { useFormik } from 'formik'
 import theme from '../../theme'
 import PrimaryButton from '../Styling/PrimaryButton'
 import * as yup from 'yup'
+import useSignIn from '../../hooks/useSignIn'
+import { useNavigate } from 'react-router-native'
 
 const styles = StyleSheet.create({
   container: {
@@ -56,7 +58,20 @@ const initialValues = {
   password: '',
 }
 
-const SignInForm = ({ onSubmit }) => {
+const SignInForm = () => {
+  const [signIn] = useSignIn()
+  const navigate = useNavigate()
+
+  const onSubmit = async (values) => {
+    const { username, password } = values
+
+    try {
+      await signIn({ username, password })
+      navigate('/')
+    } catch (e) {
+      console.log(e)
+    }
+  }
   const formik = useFormik({
     initialValues,
     validationSchema,
@@ -95,9 +110,6 @@ const SignInForm = ({ onSubmit }) => {
         <Text style={styles.errorMessage}>{formik.errors.password}</Text>
       )}
       <PrimaryButton onPress={formik.handleSubmit}>Sign In</PrimaryButton>
-      {/* <Pressable onPress={formik.handleSubmit} style={styles.button}>
-        <Text style={styles.buttonText}>Sign in</Text>
-      </Pressable> */}
     </View>
   )
 }
