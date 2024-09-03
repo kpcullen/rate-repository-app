@@ -13,11 +13,11 @@ const styles = StyleSheet.create({
     backgroundColor: theme.colors.backgroundColor,
     paddingTop: Constants.statusBarHeight,
     paddingBottom: 10,
-    paddingLeft: 8,
+    paddingLeft: 6,
   },
   link: {
     paddingHorizontal: 6,
-    marginRight: 24,
+    marginRight: 18,
   },
 })
 
@@ -37,19 +37,34 @@ const AppBar = () => {
     }
   }
 
-  console.log('USER', user)
   return (
     <View style={styles.container}>
       <ScrollView horizontal>
         <Link to="/" style={styles.link}>
           <AppBarTab>Repositories</AppBarTab>
         </Link>
+        {user && (
+          <>
+            <Link to="/reviewform" style={styles.link}>
+              <AppBarTab>Review form</AppBarTab>
+            </Link>
+            <Link to="/myreviews" style={styles.link}>
+              <AppBarTab>My reviews</AppBarTab>
+            </Link>
+          </>
+        )}
         {!user ? (
-          <Link to="/signin" style={styles.link}>
-            <AppBarTab>Sign In</AppBarTab>
-          </Link>
+          <>
+            <Link to="/signin" style={styles.link}>
+              <AppBarTab>Sign In</AppBarTab>
+            </Link>
+
+            <Link to="/signup" style={styles.link}>
+              <AppBarTab>Sign Up</AppBarTab>
+            </Link>
+          </>
         ) : (
-          <TouchableOpacity onPress={handleSignOut}>
+          <TouchableOpacity onPress={handleSignOut} style={styles.link}>
             <AppBarTab>Sign Out</AppBarTab>
           </TouchableOpacity>
         )}
