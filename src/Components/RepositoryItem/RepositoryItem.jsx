@@ -27,7 +27,7 @@ const RepositoryItem = () => {
     <FlatList
       data={reviews}
       onEndReached={onEndReach}
-      onEndReachedThreshold={100}
+      onEndReachedThreshold={50}
       renderItem={({ item }) => <ReviewItem review={item} />}
       keyExtractor={({ id }) => id}
       ListHeaderComponent={() => (
