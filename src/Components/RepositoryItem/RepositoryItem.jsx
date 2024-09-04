@@ -7,7 +7,7 @@ import ReviewItem from '../Reviews/ReviewItem'
 
 const RepositoryItem = () => {
   const { id } = useParams()
-  const { repository, loading } = useRepository(id)
+  const { repository, loading, fetchMore } = useRepository(id)
 
   if (loading)
     return (
@@ -19,9 +19,15 @@ const RepositoryItem = () => {
     reviews: { edges: reviews },
   } = repository
 
+  const onEndReach = () => {
+    fetchMore()
+  }
+
   return (
     <FlatList
       data={reviews}
+      onEndReached={onEndReach}
+      onEndReachedThreshold={100}
       renderItem={({ item }) => <ReviewItem review={item} />}
       keyExtractor={({ id }) => id}
       ListHeaderComponent={() => (

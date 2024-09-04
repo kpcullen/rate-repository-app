@@ -7,47 +7,44 @@ import { useDebouncedCallback } from 'use-debounce'
 const RepositoryList = () => {
   const [order, setOrder] = useState('')
   const [value, setValue] = useState('')
-  const [searchKeyword, setSearchKeyword] = useState('')
+  const [keyword, setKeyword] = useState('')
 
   const handleSetOrder = (value) => {
-    let newOrder = {}
     if (value === 'Latest repositories') {
-      newOrder = { orderBy: 'CREATED_AT', orderDirection: 'DESC' }
+      setOrder({ orderBy: 'CREATED_AT', orderDirection: 'DESC' })
       setValue(value)
     }
     if (value === 'Oldest repositories') {
-      newOrder = { orderBy: 'CREATED_AT', orderDirection: 'ASC' }
+      setOrder({ orderBy: 'CREATED_AT', orderDirection: 'ASC' })
       setValue(value)
     }
     if (value === 'Highest rated') {
-      newOrder = {
+      setOrder({
         orderBy: 'RATING_AVERAGE',
         orderDirection: 'DESC',
-      }
+      })
       setValue(value)
     }
     if (value === 'Lowest rated') {
-      newOrder = { orderBy: 'RATING_AVERAGE', orderDirection: 'ASC' }
+      setOrder({ orderBy: 'RATING_AVERAGE', orderDirection: 'ASC' })
       setValue(value)
     }
     if (value === 'reset') {
-      newOrder = {}
+      setOrder({})
       setValue('')
-      setSearchKeyword('')
+      setKeyword('')
     }
-    setOrder(newOrder)
-    refetch({ ...newOrder, searchKeyword })
   }
 
   const handleSetKeyword = useDebouncedCallback((value) => {
-    setSearchKeyword(value)
-    refetch({ ...order, searchKeyword })
+    setKeyword(value)
   }, 500)
 
-  const { repositories, fetchMore, refetch } = useRepositories({
-    ...order,
-    searchKeyword,
-  })
+  let listValues = {}
+  if (order) listValues = order
+  if (keyword) listValues.searchKeyword = keyword
+
+  const { repositories, fetchMore } = useRepositories(listValues)
 
   const onEndReach = () => {
     fetchMore()

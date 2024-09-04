@@ -10,7 +10,7 @@ const useUserReviews = () => {
   })
 
   return {
-    data: data?.me?.reviews?.edges || null,
+    data: data?.me?.reviews?.edges || [],
     loading,
     error,
     userId: data?.me?.id,

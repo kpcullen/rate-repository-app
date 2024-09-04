@@ -70,6 +70,7 @@ const RepositoryListContainer = ({
   setOrder,
   value,
   setKeyword,
+  onEndReach,
 }) => {
   const navigate = useNavigate()
 
@@ -95,6 +96,8 @@ const RepositoryListContainer = ({
       data={repositoryNodes}
       ListHeaderComponent={repositoryOrderMenu}
       ItemSeparatorComponent={ItemSeparator}
+      onEndReached={onEndReach}
+      onEndReachedThreshold={100}
       renderItem={({ item }) => (
         <Pressable onPress={() => navigate(`/${item.id}`)}>
           <RepositoryItem
